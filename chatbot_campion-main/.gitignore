@@ -1,0 +1,20 @@
+# Local secrets or environment files
+.env
+.env.*
+
+# Common editor / OS clutter
+*.log
+*.swp
+*.pyc
+.DS_Store
+.idea/
+.vscode/
+
+# Node / static web builds
+node_modules/
+dist/
+build/
+coverage/
+
+# Optional local server output or caches
+.cache/

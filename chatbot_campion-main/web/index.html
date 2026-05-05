@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pyro-Morph browser chat companion.">
+  <meta name="theme-color" content="#0d1020">
+  <meta name="color-scheme" content="dark">
+  <title>Pyro-Morph</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23a855f7'/%3E%3Cstop offset='1' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3Ccircle cx='24' cy='26' r='4' fill='white'/%3E%3Ccircle cx='40' cy='26' r='4' fill='white'/%3E%3Cpath d='M21 40c4 4 18 4 22 0' stroke='white' stroke-width='4' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <main class="shell">
+    <section class="hero-card">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true">PM</div>
+        <div>
+          <p class="eyebrow">Browser rewrite</p>
+          <h1>Pyro-Morph</h1>
+        </div>
+      </div>
+
+      <div class="avatar-wrap">
+        <div class="avatar-card" id="avatarCard" data-mood="neutral" data-thinking="false" data-mode="compact">
+          <div class="avatar-face">
+            <span class="avatar-eye left"></span>
+            <span class="avatar-eye right"></span>
+            <span class="avatar-mouth"></span>
+            <span class="avatar-thought-dot dot-one"></span>
+            <span class="avatar-thought-dot dot-two"></span>
+          </div>
+        </div>
+        <div class="avatar-copy">
+          <p id="moodLabel">Calm and ready</p>
+          <p id="statusLabel">Local emotion cues + OpenAI chat via browser.</p>
+        </div>
+      </div>
+
+      <div class="control-row">
+        <button class="chip active" type="button" data-mode="chatOnly">Chat only</button>
+        <button class="chip" type="button" data-mode="videoCompanion">Companion</button>
+      </div>
+
+      <div class="status-panel">
+        <div>
+          <span class="status-dot" id="connectionDot"></span>
+          <span id="connectionText">Not connected</span>
+        </div>
+        <button class="ghost-button" type="button" id="openSettingsBtn">Settings</button>
+      </div>
+
+      <div class="help-box">
+        Direct browser calls to api.openai.com are often blocked by CORS. Use an HTTPS proxy URL if your endpoint needs one.
+      </div>
+    </section>
+
+    <section class="chat-card">
+      <div class="chat-topbar">
+        <div>
+          <p class="eyebrow">Conversation</p>
+          <h2>Talk to the companion</h2>
+        </div>
+        <button class="ghost-button" type="button" id="clearBtn">Clear</button>
+      </div>
+
+      <div class="crisis-banner hidden" id="crisisBanner">
+        <div>
+          <strong>High-risk language detected.</strong>
+          <p>Keep the reply calm and grounded. If this is about immediate harm, contact local emergency services or a crisis line now.</p>
+        </div>
+        <button class="ghost-button" type="button" id="dismissCrisisBtn">Dismiss</button>
+      </div>
+
+      <div class="messages" id="messages" aria-live="polite" aria-relevant="additions text"></div>
+
+      <div class="typing-row hidden" id="typingRow">
+        <div class="typing-dots" aria-label="typing">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <form class="composer" id="composer">
+        <textarea id="messageInput" rows="1" placeholder="Write a message..." aria-label="Message"></textarea>
+        <button type="submit" class="send-button" id="sendButton">Send</button>
+      </form>
+
+      <p class="error-text hidden" id="errorText"></p>
+    </section>
+  </main>
+
+  <dialog class="settings-modal" id="settingsModal">
+    <form method="dialog" class="settings-panel" id="settingsForm">
+      <div class="settings-header">
+        <div>
+          <p class="eyebrow">Connection</p>
+          <h3>API settings</h3>
+        </div>
+        <button type="button" class="ghost-button" id="closeSettingsBtn">Close</button>
+      </div>
+
+      <label>
+        <span>OpenAI API key</span>
+        <input type="password" id="apiKeyInput" autocomplete="off" placeholder="sk-...">
+      </label>
+
+      <label>
+        <span>Base URL</span>
+        <input type="url" id="baseUrlInput" placeholder="https://api.openai.com/v1">
+      </label>
+
+      <div class="settings-actions">
+        <button type="button" class="ghost-button danger" id="resetConnectionBtn">Reset</button>
+        <button type="submit" class="send-button">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
